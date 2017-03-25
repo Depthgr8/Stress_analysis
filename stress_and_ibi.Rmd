@@ -1,0 +1,54 @@
+---
+title: "Stress prediction using IBI"
+author: "Deepak Sharma"
+date: "March 20, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set( echo = FALSE,
+	message = FALSE, warning = FALSE
+)
+
+```
+
+
+This script predicts stress using IBI (Inter Bear Interval) data.
+
+## Importing and subsetting data
+
+```{r Import library and data, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Importing Dr. Shashi data
+
+require(XLConnect)
+
+di <- loadWorkbook("~/AIIIMS work/Stress_analysis/Datasets/dr. indrajit 30-6-15(E).xlsx")
+di <- readWorksheet(di, sheet = "30 Jun 2015 15_27_45", header = TRUE)
+
+# Filtering range
+
+di_ibi <- as.numeric(di$X231.3042997)
+first <- which(di$X231.3042997 == 'IBI') + 1
+times <- di$Move.samples
+lasttime <- tail(times[!is.na(times)], 1)
+last <- which(times == lasttime)
+
+# Subsetting
+
+di_ibi <- di_ibi[first:last]
+a <- as.numeric(subset(di_ibi, di_ibi > 500 & di_ibi < 2200))
+cat("Standard deviation : ", sd(a))
+
+```
+
+## Visualizing results
+
+```{r Visualize results, echo=FALSE, message=FALSE, warning=FALSE}
+
+plot(a,type='l')
+hist(a,type='l')
+
+```
+
