@@ -13,8 +13,7 @@ knitr::opts_chunk$set( echo = FALSE,
 
 ```
 
-
-This script predicts stress using IBI (Inter Bear Interval) data.
+This script predicts stress using IBI (Inter Beat Interval) data.
 
 ## Importing and subsetting data
 
@@ -24,8 +23,9 @@ This script predicts stress using IBI (Inter Bear Interval) data.
 
 require(XLConnect)
 
-di <- loadWorkbook("~/AIIIMS work/Stress_analysis/Datasets/dr. indrajit 30-6-15(E).xlsx")
-di <- readWorksheet(di, sheet = "30 Jun 2015 15_27_45", header = TRUE)
+setwd("~/AIIMS work/Stress_analysis")
+di <- loadWorkbook("~/AIIMS work/Stress_analysis/Datasets/dr. indrajit 30-6-15(E).xlsx")
+di <- readWorksheet(di,sheet = 1, header = TRUE)
 
 # Filtering range
 
@@ -39,7 +39,9 @@ last <- which(times == lasttime)
 
 di_ibi <- di_ibi[first:last]
 a <- as.numeric(subset(di_ibi, di_ibi > 500 & di_ibi < 2200))
-cat("Standard deviation : ", sd(a))
+cat("Minimum IBI : ", min(di_ibi))
+cat("Maximum IBI : ", max(di_ibi))
+cat("Standard deviation : ", sd(di_ibi))
 
 ```
 
