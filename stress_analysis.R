@@ -8,16 +8,17 @@
 # Import libraries --------------------------------------------------------
 
 library(xlsx)
+library(XLConnect)
 
 # Import data -------------------------------------------------------------
 
-di <- read.xlsx("~/AIIMS work/Stress_analysis/Datasets/DR. indrajit 27-5-15(E).xlsx",sheetIndex = 1,header = FALSE)
+di <- read.xlsx("~/AIIMS work/Stress_analysis/Datasets/27-1-15 dr indrajeet(M).xlsx",sheetIndex = 1,header = TRUE)
 
 # Filter ------------------------------------------------------------------
 
-di_ibi <- as.numeric(di$X41)
-first <- which(di$X41 == 'IBI') + 1
-times <- di$X36
+di_ibi <- as.numeric(di$IBI)
+first <- 1
+times <- di$LocalTime
 lasttime <- tail(times[!is.na(times)], 1)
 last <- which(times == lasttime)
 
@@ -32,6 +33,6 @@ y <- fft(as.numeric(a))
 
 # Visualization -----------------------------------------------------------
 
-plot(fft(di_ibi),type = 'l')
+plot(1:last,fft(di_ibi),type = 'l')
 plot(a,type='l')
 hist(a,breaks = 200)
