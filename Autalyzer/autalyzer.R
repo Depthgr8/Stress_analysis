@@ -34,6 +34,9 @@ ui <- fluidPage(sidebarLayout(
 server <- function(input, output){
   output$contents <- renderTable({
     inFile <- input$file1
+    for(i in 1:length(input$files[,1])){
+      lst[[i]] <- read.csv(input$files[[i, 'datapath']])
+    }
     if (is.null(inFile))
       return(NULL)
     a <- read.xlsx(inFile$datapath,

@@ -13,7 +13,7 @@ knitr::opts_chunk$set( echo = FALSE,
 
 ```
 
-This script predicts stress using IBI (Inter Beat Interval) data.
+Predict stress using IBI (Inter Beat Interval) data.
 
 ## Importing and subsetting data
 
@@ -23,25 +23,29 @@ This script predicts stress using IBI (Inter Beat Interval) data.
 
 require(XLConnect)
 
-setwd("~/AIIMS work/Stress_analysis")
-di <- loadWorkbook("~/AIIMS work/Stress_analysis/Datasets/dr. indrajit 30-6-15(E).xlsx")
-di <- readWorksheet(di,sheet = 1, header = TRUE)
+di <- read.xlsx("~/AIIMS work/Stress_analysis/Datasets/27-1-15 dr indrajeet(M).xlsx",sheetIndex = 1,header = TRUE)
 
 # Filtering range
 
-di_ibi <- as.numeric(di$X231.3042997)
-first <- which(di$X231.3042997 == 'IBI') + 1
-times <- di$Move.samples
-lasttime <- tail(times[!is.na(times)], 1)
-last <- which(times == lasttime)
+min_ibi <- 400
+max_ibi <- 800
+margin <- 50
 
 # Subsetting
 
+first <- margin
+di_ibi <- as.numeric(di$IBI)
+times <- di$LocalTime
+lasttime <- tail(times[!is.na(times)], 1)
+last <- which(times == lasttime)
+last <- last - x
+
 di_ibi <- di_ibi[first:last]
-a <- as.numeric(subset(di_ibi, di_ibi > 500 & di_ibi < 2200))
-cat("Minimum IBI : ", min(di_ibi))
-cat("Maximum IBI : ", max(di_ibi))
-cat("Standard deviation : ", sd(di_ibi))
+a <- as.numeric(subset(di_ibi, di_ibi >= min_ibi & di_ibi < max_ibi ))
+cat("Range of IBI (Min, Max) : ", range(di_ibi))
+cat("Standard deviation of complete dataset: ", sd(di_ibi))
+cat("Standard deviation of subset : ", sd(a))
+y <- fft(as.numeric(a))
 
 ```
 
@@ -49,8 +53,9 @@ cat("Standard deviation : ", sd(di_ibi))
 
 ```{r Visualize results, echo=FALSE, message=FALSE, warning=FALSE}
 
+plot(1:last,fft(di_ibi),type = 'l')
 plot(a,type='l')
-hist(a,type='l')
+hist(a,breaks = 200)
 
 ```
 
