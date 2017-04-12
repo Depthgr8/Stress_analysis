@@ -1,6 +1,6 @@
 # Documentation -----------------------------------------------------------
 
-# Title: "Batch calculations of excel sheets"
+# Title: "Batch analysis of Inter Beat Interval data (Excel sheets)"
 # Author: "Deepak Sharma"
 # Date: "April 11, 2017"
 
@@ -13,8 +13,8 @@ library(xlsx)
 setwd("~/AIIMS work/Stress_analysis/Datasets")
 files <-  Sys.glob("*.xlsx")
 limit <- length(files)
-list.index <- 1:limit
-ibi_m <- matrix(nrow=6,ncol=2)
+list.index <- 1:1
+ibi_m <- matrix(nrow=6,ncol=limit)
 
 # Filter parameters -------------------------------------------------------
 
@@ -42,5 +42,8 @@ for(i in list.index)
   ibi_m[3,i] <- sd(s_set)
   ibi_m[4,i] <- median(s_set)
   ibi_m[5,i] <- max(di_ibi)
+  
+  # Create output csv data file from matrix
 }
+write.csv(ibi_m[,], file = "../Output.csv")
 
