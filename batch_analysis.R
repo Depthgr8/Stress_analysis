@@ -13,7 +13,7 @@ library(xlsx)
 setwd("~/AIIMS work/Stress_analysis/Datasets")
 files <-  Sys.glob("*.xlsx")
 limit <- length(files)
-list.index <- 114:limit
+list.index <- 1:limit
 ibi_m <- matrix(nrow=10,ncol=limit,dimnames = list(c("Index","File Name","Min IBI","Min Fil","Mean Fil","SD Fil","Median Fil","Max Fil","Max IBI","Category")))
 
 # Filter parameters -------------------------------------------------------
@@ -54,7 +54,6 @@ for(i in list.index)
   s_set <- as.numeric(subset(di_ibi, di_ibi >= min_ibi & di_ibi < max_ibi ))
   
   # Put data in IBI matrix
-  
   ibi_m[1,i] <- i
   ibi_m[2,i] <- files[i]
   ibi_m[3,i] <- min(di_ibi)
@@ -64,10 +63,9 @@ for(i in list.index)
   ibi_m[7,i] <- median(s_set)
   ibi_m[8,i] <- max(s_set)
   ibi_m[9,i] <- max(di_ibi)
-  ibi_m[8,i] <- 
   ibi_m[10,i] <- categorize(sd(s_set))
-  
-  # Create output csv data file from matrix
 }
+
+# Create output csv data file from matrix
 write.csv(t(ibi_m[,]), file = "../Output.csv")
 
