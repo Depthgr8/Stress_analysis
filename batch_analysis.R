@@ -14,7 +14,7 @@ library(psych)
 setwd("~/AIIMS work/Stress_analysis/Datasets")
 files <-  Sys.glob("*.xlsx")
 limit <- length(files)
-list.index <- 1:1
+list.index <- 1:limit
 ibi_m <- matrix(nrow=18,ncol=limit,dimnames = list(c("Index","File Name","Min IBI","Min Fil","Mean Fil","SDN","Median Fil","Max Fil","Max IBI","Category","Skewness","Kurtosis","Avg HR","RRMS","NN50","pNN50","Subset_length","Data_length")))
 
 # Filter parameters -------------------------------------------------------
