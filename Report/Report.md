@@ -34,9 +34,8 @@ plot(sample, type = 'l', main = "Unfiltered raw data")
 plot(sample_filtered, type = 'l',main = "Filtered clean data")
 ```
 
-| Raw | Clean |
-| ------ | ------ |
-| [![N|Raw data ](https://github.com/Depthgr8/Stress_analysis/upload/master/Report/unclean.png)] | [![N|Clean data ](https://github.com/Depthgr8/Stress_analysis/upload/master/Report/clean.png)] |
+[![N|Raw](https://github.com/Depthgr8/Stress_analysis/blob/master/Report/clean.png)]()
+[![N|Clean](https://github.com/Depthgr8/Stress_analysis/blob/master/Report/clean.png)]()
 
 
 ### Results
